@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS miflib;
- 
+
 USE miflib;
 
 CREATE TABLE user_list (
@@ -13,7 +13,7 @@ INSERT INTO user_list (id,name,surname) VALUES
 (2,'Harley','Davidson'),
 (3,'Suzuki','Honda');
 
-ALTER TABLE ('user_list') 
+ALTER TABLE (user_list)
     ADD PRIMARY KEY('id');
-   
+
 COMMIT;

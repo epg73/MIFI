@@ -1,3 +1,4 @@
+#
 version: '3.9'
 services:
    apache:
@@ -6,7 +7,7 @@ services:
       ports:
          - 80:80
       volumes:
-# только если пользователь в группе docker      
+# только если пользователь в группе docker
          - ${PWD}/www:/var/www/html
       depends_on:
          - mysql

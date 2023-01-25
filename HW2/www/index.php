@@ -13,7 +13,7 @@ if($link==false) {
     exit();
 }
 else {
-    printf("Database ok  <br>");
+    printf("Database OK!!!  <br>");
 }
 
 $sql = 'SELECT id, name, surname  FROM user_list';
@@ -25,4 +25,5 @@ while ($row = mysqli_fetch_array($result)) {
 }
 
 phpinfo();
+
 ?>
