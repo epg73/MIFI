@@ -1,0 +1,7 @@
+insert into user_list (id,name,surname) values(4,'Minsk','Dnepr');
+
+insert into user_list (id,name,surname) values(5,'Erick','Stone');
+
+insert into user_list (id,name,surname) values(6,'Frank','Kaffka');
+
+insert into user_list (id,name,surname) values(7,'Linux','Ubuntu');
