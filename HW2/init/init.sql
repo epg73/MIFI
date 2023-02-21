@@ -14,6 +14,6 @@ INSERT INTO user_list (id,name,surname) VALUES
 (3,'Suzuki','Honda');
 
 ALTER TABLE (user_list)
-    ADD PRIMARY KEY('id');
+    ADD PRIMARY KEY(id);
 
 COMMIT;
