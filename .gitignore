@@ -1,0 +1,8 @@
+.idea/.gitignore
+.idea/MIFI.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
+HW1/arch.7z
+HW6/__pycache__/scaner.cpython-310.pyc

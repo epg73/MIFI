@@ -1,3 +1,5 @@
+import argparse
+import os
 
 lang = 'russian'
 
@@ -7,9 +9,4 @@ elif(lang == 'german'):
     msg = 'Hola'
 else:
   msg='Привет'
-  
 print(msg)
-
-
-
-

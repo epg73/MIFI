@@ -27,11 +27,13 @@ def do_ping_sweep(ip, num_of_host):
     network_ip = ip_parts[0] + '.' + ip_parts[1] + '.' + ip_parts[2] + '.'
     scanned_ip = network_ip + str(int(ip_parts[3]) + num_of_host)
     response = os.popen(f'ping  -c 2 {scanned_ip} ')
+    print(f'{scanned_ip}')
 
     res = response.readlines()
-    a = res[4].split()
-    if not str(res[4]).count("loss"):
-        print(f"[#] Result of scanning: {scanned_ip} [#]\n{res[4]}", end='\n\n')
+
+    a = res[2].split()
+    if not str(res[2]).count("loss"):
+        print(f"[#] Result of scanning: {scanned_ip} [#]\n{res[2]}", end='\n\n')
 
 
 def sent_http_request(target, method, headers=None, payload=None):
@@ -62,6 +64,8 @@ parser.add_argument('-w', '--web', type=str, help='WEB address')
 parser.add_argument('-m', '--mode', type=str, help='mode GET or PUT')
 
 args = parser.parse_args()
+
+print(args.task)
 
 if args.task == 'scan':
 
