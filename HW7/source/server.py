@@ -1,66 +1,64 @@
-from typing import Union
+import json
+import os
+
 import requests
-
 from fastapi import FastAPI
-from pydantic import BaseModel
-from starlette.responses import JSONResponse
-
-def sent_http_request(target, method, headers=None, payload=None):
-    headers_dict = dict()
-    print(target)
-    print(method)
-    print(headers)
-    print(payload)
-    print('----------')
-    if headers:
-        for header in headers:
-            header_name = header.split(':')[0]
-            header_value = header.split(':')[1:]
-            headers_dict[header_name] = ':'.join(header_value)
-    if method == "GET":
-        s='http://'+target
-        print(s)
-        response = requests.get(s, headers=headers_dict)
-    elif method == "POST":
-        response = requests.post(target, headers=headers_dict, data=payload)
-    print(
-        f"[#] Response status code: {response.status_code}\n"
-        f"[#] Response headers: {json.dumps(dict(response.headers), indent=4, sort_keys=True)}\n"
-        f"[#] Response content:\n {response.text}")
-
-
-class Item(BaseModel):
-    name: str
-    description: Union[str, None] = None
-    price: float
-    tax: Union[float, None] = None
-
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
 
-@app.post("/items/{item_id}")
-async def create_item(item: Item, item_id: int):
-    return JSONResponse({"item": item.dict(), "item_id": item_id})
-
-
 @app.get("/")
-async def homepage():
-    return JSONResponse({'message': 'HELLO world'})
+async def root():
+    return HTMLResponse("<h1>Hello Scaner</h1> <br> <b><u>/scan :</u></b>  <br><br> <b><u>/sendhttp :</u></b> <br>")
 
 
-@app.get("/scan/")
-async def scan():
-    print("scan ip ")
+@app.get('/scan')
+async def scan(ip, num_of_hosts: int = 0):
+    print(f'ip {ip} num {num_of_hosts}')
+    ip_parts = ip.split('.')
+    print(ip_parts)
+    answer = f'Result ping {ip} with num {num_of_hosts} \n'
+    for host in range(num_of_hosts):
+        network_ip = ip_parts[0] + '.' + ip_parts[1] + '.' + ip_parts[2] + '.'
+        scanned_ip = network_ip + str(int(ip_parts[3]) + host)
+        response = os.popen(f'ping  -c 2 {scanned_ip} ')
+        print(f'{scanned_ip}')
+        res = response.readlines()
+        answer += f"[#] Result of scanning: {scanned_ip} [#]\n{res[2]} "
+        print(f"[#] Result of scanning: {scanned_ip} [#]\n{res[2]}", end='\n\n')
 
-    return JSONResponse({'ip': 'address'})
+    return {"ip": ip,
+            "num_of_hosts": num_of_hosts,
+            "answer": answer}
 
-@app.get('/http/')
-async def http():
-    print('ok request')
-    return JSONResponse({'http': 'address'})
 
-@app.get("/get_items/{item_id}")
-async def read_item(item_id: int):
-    print("item_id", item_id)
-    return {"item_id": item_id}
+@app.get('/sendhttp')
+async def http(target: str, method: str = 'GET', headers=None, payload=None):
+    print('sendhttp')
+    print(f"{target} {method}")
+    print(f'Headers: {headers}')
+
+    headers_dict = dict()
+    if headers:
+        list_of_headers = headers.split(' ')
+        print(list_of_headers)
+        for a in list_of_headers:
+            s = a.split(':')
+            header_name = s[0]
+            header_value = s[1]
+            headers_dict[header_name] = header_value
+
+        print(headers_dict)
+    if method == "GET":
+        print(headers_dict)
+        response = requests.get(target, headers=headers_dict)
+    elif method == "POST":
+        response = requests.post(target, headers=headers_dict, data=payload)
+    print(f"[#] Response status code: {response.status_code}\n")
+    print(f"[#] Response headers: {json.dumps(dict(response.headers), indent=4, sort_keys=True)}\n")
+    return {"status": response.status_code,
+            "headers": json.dumps(dict(response.headers), indent=4, sort_keys=True)}
+
+
+
