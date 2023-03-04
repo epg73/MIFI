@@ -1,6 +1,7 @@
 import json
 import os
 
+
 import requests
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
@@ -59,6 +60,3 @@ async def http(target: str, method: str = 'GET', headers=None, payload=None):
     print(f"[#] Response headers: {json.dumps(dict(response.headers), indent=4, sort_keys=True)}\n")
     return {"status": response.status_code,
             "headers": json.dumps(dict(response.headers), indent=4, sort_keys=True)}
-
-
-

@@ -6,3 +6,12 @@
 .idea/inspectionProfiles/profiles_settings.xml
 HW1/arch.7z
 HW6/__pycache__/scaner.cpython-310.pyc
+*.xml
+.DS_Store
+HW2/.DS_Store
+HW6/.DS_Store
+HW6/__pycache__/temp.cpython-311-pytest-7.2.1.pyc
+HW6/source/__pycache__/scaner.cpython-311.pyc
+HW6/source/__pycache__/server.cpython-311.pyc
+HW7/source/__pycache__/server.cpython-310.pyc
+HW7/source/__pycache__/server.cpython-311.pyc
